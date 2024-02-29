@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Joe's Hot Dogs</title>
+  </head>
+  <body>
+    <h2>Joe's Hotdogs Menu</h2>
+    <div id="menu-json"></div>
+    <div id="menu-array"></div>
+    <!-- Below the menu add the following:
+    1.	A text input for the item name and a button labelled “Add to Cart”
+    2.	A <div> that defines an area for a shopping cart
+    3.	An additional button below the “cart” labelled “Checkout” -->
+    <input type="text" id="item-name" placeholder="Enter item name...">
+    <button onclick="addToCart()">Add to Cart</button>
+    <div id="shopping-cart"></div>
+    <button onclick="checkout()">Checkout</button>
+    <footer>DGMD E-28 Assignment 5 Harvard Extension School</footer>
+    <script>
+        /* PART 1
+        Using an associative array of items and prices */
+        const menuAssoc = {
+        "hotdog": 4,
+        "fries": 3.50,
+        "soda": 1.50,
+        "sauerkraut": 1
+        };
+        /* Using a JSON object */
+        const menuJSON = {
+        "hotdog": 4,
+        "fries": 3.50,
+        "soda": 1.50,
+        "sauerkraut": 1
+        };
+        /* Using a function object */
+        function MenuItem(name, price) {
+            this.name = name;
+            this.price = price;
+        }
+        const menuItems = [
+            new MenuItem("hotdog", 4),
+            new MenuItem("fries", 3.50),
+            new MenuItem("soda", 1.50),
+            new MenuItem("sauerkraut", 1)
+        ];
+        /* PART 2
+        Display a menu of items using JSON object from above */
+        function displayMenuJSON() {
+            const menuDiv = document.getElementById("menu-json");
+            menuDiv.innerHTML = "<h3>Menu using JSON</h3>";
+            for (const item in menuJSON) {
+                menuDiv.innerHTML += `<p>${item}: $${menuJSON[item]}</p>`;
+            }
+        }
+        /* Display a menu of items using the array of objects from above */
+        function displayMenuArray() {
+            const menuDiv = document.getElementById("menu-array");
+            menuDiv.innerHTML = "<h3>Menu using Array of Objects</h3>";
+            menuItems.forEach(item => {
+                menuDiv.innerHTML += `<p>${item.name}: $${item.price}</p>`;
+            });
+        }
+        displayMenuJSON();
+        displayMenuArray();
+        // PART 3
+        //     Create an associative array.  The keys will be the menu items and the values will be quantities. Initialize the array with the menu items and a quantity of 0.
+        const cart = {};
+        for (const item in menuAssoc) {
+            cart[item] = 0;
+        }
+        // PART 4
+        // The elements on the page should function as follows:
+        // The user will enter an item in the text box and then click the “Add to Cart” button.  If the item is valid (note that it should be case insensitive), add one to the quantity for that item.
+        // Display all items with quantity greater than 0 in the cart area (with the current quantity)
+        function addToCart() {
+            const itemName = document.getElementById("item-name").value.toLowerCase();
+            if (cart.hasOwnProperty(itemName)) {
+                cart[itemName]++;
+                displayCart();
+            } else {
+            alert("Invalid item name.");
+            }
+        }
+        function displayCart() {
+            const cartDiv = document.getElementById("shopping-cart");
+            cartDiv.innerHTML = "<h3>Shopping Cart</h3>";
+            for (const item in cart) {
+                if (cart[item] > 0) {
+                    cartDiv.innerHTML += `<p>${item}: ${cart[item]}</p>`;
+                }
+            }
+        }
+        // PART 5
+        // When the user clicks the “Checkout” button, the final cost of all items should be tallied and a popup should display the quantity and total cost for each item purchased (ie, quantity > 0) as well as the total for the order.  And,the cart should be cleared and all quantities returned to 0.
+        function checkout() {
+            let totalCost = 0;
+             let orderDetails = "Order Details:\n";
+            for (const item in cart) {
+                if (cart[item] > 0) {
+                    const itemCost = cart[item] * menuAssoc[item];
+                    totalCost += itemCost;
+                    orderDetails += `${item}: ${cart[item]} x $${menuAssoc[item]} = $${itemCost}\n`;
+                    cart[item] = 0;
+                }
+            }
+            orderDetails += `Total: $${totalCost}`;
+            alert(orderDetails);
+            displayCart();
+        }
+    </script>
+    </body>
+</html>

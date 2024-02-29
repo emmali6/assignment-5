@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Joe's Hot Dogs</title>
+  </head>
+  <body>
+    <h2>Joe's Hotdogs Menu</h2>
+    <div id="menu-json"></div>
+    <div id="menu-array"></div>
+    <footer>DGMD E-28 Assignment 5 Harvard Extension School</footer>
+    <script>
+        /* PART 1
+        Using an associative array of items and prices */
+        const menuAssoc = {
+        "hotdog": 4,
+        "fries": 3.50,
+        "soda": 1.50,
+        "sauerkraut": 1
+        };
+        /* Using a JSON object */
+        const menuJSON = {
+        "hotdog": 4,
+        "fries": 3.50,
+        "soda": 1.50,
+        "sauerkraut": 1
+        };
+        /* Using a function object */
+        function MenuItem(name, price) {
+            this.name = name;
+            this.price = price;
+        }
+        const menuItems = [
+            new MenuItem("hotdog", 4),
+            new MenuItem("fries", 3.50),
+            new MenuItem("soda", 1.50),
+            new MenuItem("sauerkraut", 1)
+        ];
+        /* PART 2
+        Display a menu of items using JSON object from above */
+        function displayMenuJSON() {
+            const menuDiv = document.getElementById("menu-json");
+            menuDiv.innerHTML = "<h3>Menu using JSON</h3>";
+            for (const item in menuJSON) {
+                menuDiv.innerHTML += `<p>${item}: $${menuJSON[item]}</p>`;
+            }
+        }
+        /* Display a menu of items using the array of objects from above */
+        function displayMenuArray() {
+            const menuDiv = document.getElementById("menu-array");
+            menuDiv.innerHTML = "<h3>Menu using Array of Objects</h3>";
+            menuItems.forEach(item => {
+                menuDiv.innerHTML += `<p>${item.name}: $${item.price}</p>`;
+            });
+        }
+        displayMenuJSON();
+        displayMenuArray();
+    </script>
+    </body>
+</html>
